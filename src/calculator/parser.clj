@@ -19,6 +19,14 @@
     <spaces> = #'\\s'*"))
 
 
+(defn parse-expression
+  [query-expression]
+  (let [graph (calculator-parser query-expression)]
+    (if (insta/failure? graph)
+      [:ERROR]
+      graph)))
+
+
 (defn parse-number
   [string]
   (Double/parseDouble string))
