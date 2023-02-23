@@ -3,3 +3,4 @@
 .idea
 .cpcache
 .nrepl-port
+.clj-kondo
