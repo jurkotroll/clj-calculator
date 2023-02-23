@@ -2,21 +2,39 @@
   (:require
     [calculator.parser :as parser]))
 
-(defn calculate*
+
+(defn operation
+  [action]
+  (case action
+    :ADD +
+    :SUB -
+    :MUL *
+    :DIV /))
+
+
+(defn calculate
   [[action operand-1 operand-2]]
-  (let [operation (get {:ADD + :SUB - :MUL * :DIV /} action)]
-    (case action
-      :NUMBER (parser/parse-number operand-1)
-      :PARENTH (calculate* operand-1)
-      (operation (calculate* operand-1)
-                 (calculate* operand-2)))))
+  (case action
+    :NUMBER (parser/parse-number operand-1)
+    :PARENTH (calculate operand-1)
+    (apply (operation action)
+           (map calculate [operand-1 operand-2]))))
+
+
+;(defn calculate
+;  [[action operand-1 operand-2]]
+;  (case action
+;    :NUMBER (parser/parse-number operand-1)
+;    :PARENTH (calculate operand-1)
+;    (apply (operation action) [(calculate operand-1)
+;                               (calculate operand-2)])))
 
 
 (defn calculator
-  "Gets graph vector from parser/parse-expression"
+  "Gets graph vector from parser/parse-expressionq"
   [[ident data]]
   (case ident
-    :EXPRESSION {:result (calculate* data)}
+    :EXPRESSION {:result (calculate data)}
     :EMPTY      {:error "expression is empty"}
     :ERROR      {:error "expression is incorrect"}
     {:fail "instaparser haven't return any graph, nether error"}))
@@ -25,8 +43,8 @@
 (comment
 
   (calculator
-    (parser/parse-expression "-2+(5-7*9)/4-3"))
-
+    (parser/parse-expression "-2+(5-7*9)/4-3-(92+(5-3/3))"))
 
 
   )
+
