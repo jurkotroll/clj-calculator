@@ -24,7 +24,7 @@
   (let [graph (calculator-parser query-expression)]
     (if (insta/failure? graph)
       [:ERROR]
-      graph)))
+      (first graph))))
 
 
 (defn parse-number
