@@ -37,7 +37,7 @@
     :EXPRESSION {:result (calculate-expression data)}
     :EMPTY      {:error "expression is empty"}
     :ERROR      {:error "expression is incorrect"}
-    {:fail "instaparser haven't return any graph, nether error"}))
+    {:error "input can't be parse"}))
 
 
 (defn calculate

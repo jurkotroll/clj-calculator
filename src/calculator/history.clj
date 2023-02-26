@@ -6,7 +6,11 @@
 
 (defn add-to-history
   [history new-event]
-  (swap! history conj new-event))
+  (swap! history
+         (fn [coll]
+           (if (< (count @history) 20)
+             (conj coll new-event)
+             (conj (vec (rest coll)) new-event)))))
 
 
 (defn take-from-history
@@ -18,3 +22,10 @@
 (defn clean-history
   [history]
   (reset! history []))
+
+
+(comment
+
+  (tap> calculator-history)
+
+  )
