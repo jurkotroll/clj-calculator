@@ -26,3 +26,19 @@
        :headers {}
        :body    {:error      (:error answer)
                  :expression expression-string}})))
+
+
+(defn history-handler
+  [request]
+  (let [amount (get-in request [:json-params :amount])]
+    (ring-util/response
+      {:history-entries (history/take-from-history
+                          history/calculator-history
+                          amount)})))
+
+
+(comment
+
+  (history-handler {:json-params {:amount 2}})
+
+  )
