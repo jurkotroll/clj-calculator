@@ -8,6 +8,7 @@
 
 (defroutes app
            (POST "/calc" [] handler/calculator-handler)
+           (POST "/history" [] handler/history-handler)
            (not-found "address not found"))
 
 
