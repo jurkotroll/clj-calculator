@@ -9,4 +9,11 @@
 
 (tap> "Hello Portal")
 
-(def p (p/open {:launcher :intellij}))
+#_(server/start-server {:http-port 8000 :join? false})
+
+#_(tap> "Hello server")
+
+
+(comment
+
+  )
