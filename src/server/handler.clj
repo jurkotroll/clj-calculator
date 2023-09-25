@@ -42,3 +42,4 @@
   (history-handler {:json-params {:amount 2}})
 
   )
+;TODO: make history and calculation as two microservices
