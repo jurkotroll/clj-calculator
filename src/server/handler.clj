@@ -6,22 +6,22 @@
 
 
 (defn return-result-and-save-to-history
-  [answer expression-string]
-  (let [result (:result answer)]
-    (history/add-to-history
-      history/calculator-history
-      {:result     result
-       :expression expression-string})
-    (ring-util/response {:result result})))
+  [result expression-string]
+  (history/add-to-history
+    history/calculator-history
+    {:result     result
+     :expression expression-string})
+  (ring-util/response {:result result}))
 
 
 
 (defn calculator-handler
   [request]
   (let [expression-string (get-in request [:json-params :expression])
-        answer (calc-core/calculate expression-string)]
-    (if (:result answer)
-      (return-result-and-save-to-history answer expression-string)
+        answer (calc-core/calculate expression-string)
+        result (:result answer)]
+    (if result
+      (return-result-and-save-to-history result expression-string)
       {:status  400
        :headers {}
        :body    {:error      (:error answer)
